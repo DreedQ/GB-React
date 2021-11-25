@@ -1,0 +1,12 @@
+.message-text {
+    background: grey;
+    font-style: italic;
+    cursor: pointer;
+    color: aqua;
+}
+
+.message-text:hover {
+    background: rgb(79, 103, 128);
+    text-decoration: dashed;
+    color: darkcyan;
+}
