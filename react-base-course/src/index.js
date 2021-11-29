@@ -4,11 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const myName = 'Mr. Trololo';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App name={myName} />
+    <App  />
   </React.StrictMode>,
   document.getElementById('root')
 );

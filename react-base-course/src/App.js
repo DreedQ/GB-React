@@ -1,17 +1,47 @@
 import './App.css';
-import Message from './Message';
+import {useState, useEffect} from "react";
 
-const greeting ="Hello world, from my first react app!";
+function App() {
+    const [messageList, setMessageList] = useState([])
 
-function App(props) {
+   const addMessage = (event)=>{
+       event.preventDefault();
+        const messageBuffer = [...messageList];
+        const item={
+            id: messageBuffer.length,
+          text: event.target[0].value,
+          author:'user',
+       };
+       if(event.target[0].value){
+           messageBuffer.push(item)
+           setMessageList(messageBuffer)
+       }
+       event.target[0].value = ''
+    }
+
+    useEffect(()=>{
+        const tempMessageList = [...messageList];
+        let index = tempMessageList.length
+        if(tempMessageList[0]){ 
+            if(tempMessageList[index-1].author !== 'Bot') {
+                tempMessageList.push({id: tempMessageList.length, text:"Wow! You so smart.", author:"Bot",})
+            }
+        } 
+        const answerBot = setTimeout(()=> {
+            setMessageList(tempMessageList)},1000)
+        return()=>{
+            clearTimeout(answerBot)
+        }
+    }, [messageList])
+
     return (
         <div className="App">
-        < header className="App-header">
-        My First React App
-       <h3>Hello {props.name}!</h3>
-       <Message message={greeting} />
-        </header> 
-        </div >
+            <form onSubmit={addMessage} className="form">
+                <textarea />
+                <p><input  type="submit"/></p>
+            </form>
+            <div className="messages">{messageList.map(item => <div className="messages_each">{messageList.indexOf(item)+1}) <b>{item.author}</b> : {item.text}</div>)}</div >
+        </div>
     );
 }
 
