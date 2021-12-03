@@ -5,30 +5,59 @@
 }
 
 body {
-    background-color: cadetblue;
+    background-color: rgb(132, 216, 219);
 }
 
-.App {
+
+/* .App {
     max-width: 100%;
     display: flex;
+} */
+
+.form_text {
+    max-width: 100%;
+    margin: 0 0 15px 0;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.form_btn {
+    margin: 15px;
 }
 
 .messages {
     display: flex;
     flex-direction: column;
-    max-width: 80%;
-    margin: 15px 25px;
+    /* max-width: 80%; */
+    max-height: 80%;
+    margin: 15px 15px;
+    background: rgb(131, 187, 233);
+    border-radius: 7px;
+    border-left: 9px solid rgb(5, 182, 34);
+    border-right: 9px solid rgb(5, 182, 34);
+    padding: 16px;
+    overflow: scroll;
 }
 
 .messages_each {
-    margin-top: 5px;
+    margin-top: 2px;
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     align-items: self-start;
     font-style: italic;
     font-size: 12px;
     font-weight: 400;
-    border-bottom: 1px solid rgb(204, 105, 105);
+    padding: 5px;
+    background-color: #fff;
+    border: .3px solid rgb(204, 105, 105);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 .form {
@@ -36,11 +65,21 @@ body {
     flex-direction: column;
     max-width: 450px;
     align-items: center;
-    margin: 55px 10px 10px;
+    margin: 7px 5px;
+    background: rgb(131, 187, 233);
+    border-radius: 7px;
+    border-left: 9px solid rgb(5, 182, 34);
+    border-right: 9px solid rgb(5, 182, 34);
+    padding: 16px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
 }
 
-textarea {
+
+/* textarea {
     width: 250px;
     height: 200px;
     background-color: rgb(202, 194, 194);
-}
+} */
