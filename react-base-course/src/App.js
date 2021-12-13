@@ -1,7 +1,10 @@
+import React from 'react';
 import './App.css';
 import { createTheme, ThemeProvider, } from '@mui/material/styles';
 import Routes from "./router/Routes";
 import {BrowserRouter} from "react-router-dom";
+import { Provider } from "react-redux";
+import {store} from "./store/index";
 
 function App() {
     const theme = createTheme({
@@ -23,13 +26,13 @@ function App() {
       });
 
     return (
+        <Provider store={store}>
         <BrowserRouter>
-            <ThemeProvider theme={theme}>
-                {/*<div className="App">*/}
+                <ThemeProvider theme={theme}>
                     <Routes/>
-                {/*</div>*/}
-            </ThemeProvider>
+                </ThemeProvider>
         </BrowserRouter>
+        </Provider>
 
     );
 }

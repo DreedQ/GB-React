@@ -1,3 +1,4 @@
+import React from 'react';
 import ChatList from "../../components/ChatList";
 import {Redirect, useParams,} from "react-router-dom";
 import Messages from "../../components/Messages";
@@ -14,10 +15,12 @@ const initialChats = {
         },
     };
 
-export default function Chats({chats, setChats}) {
+export default function Chats(props) {
     const { chatId } = useParams();
+    // const chats = props.chats;
+    // const setChats = props.setChats;
 
-    if (!chats[chatId]) {
+    if (!props.chats[chatId]) {
         return <Redirect to="/no_chat" />;
     }
 
@@ -27,15 +30,15 @@ export default function Chats({chats, setChats}) {
                 <div className="messages">
                     <h3>My Chats</h3>
                     <ChatList
-                        chats={chats}
-                        setChats={setChats}
+                        chats={props.chats}
+                        setChats={props.setChats}
                         chatId={chatId}
                     />
                 </div>
 
                 <div>
-                    <Messages messages={chats[chatId].messages} />
-                    <InputMessage chats={chats} setChats={setChats} chatId={chatId}/>
+                    <Messages messages={props.chats[chatId].messages} />
+                    <InputMessage chats={props.chats} setChats={props.setChats} chatId={chatId}/>
                 </div>
             </div>
     );

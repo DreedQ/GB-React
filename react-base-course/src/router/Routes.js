@@ -1,5 +1,6 @@
+import React from 'react';
 import { Route, Switch, Link} from "react-router-dom";
-import Profile from "../components/Profile";
+import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";

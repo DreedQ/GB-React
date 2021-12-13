@@ -1,13 +1,14 @@
-import InputMessage from "./InputMessage";
+import React from 'react';
+import {List, ListItem} from "@mui/material";
 
-function Messages({messages}) {
+
+function Messages(props) {
 // console.log(messages)
     return (
         <>
-            {/*<div className="messages">{props.messages.map(item => <div className="messages_each" key={item.id}><b>{item.author}</b> : {item.text}</div>)}</div >*/}
-           <ul className="messages">
-               {messages.map(el=><li className="messages_each" key={el.id}>{el.author}: {el.text}</li>)}
-           </ul>
+           <List className="messages">
+               {props.messages.map(el => <ListItem  className="messages_each" key={el.id}>{el.author}: {el.text}</ListItem> )}
+           </List>
         </>
 
     )

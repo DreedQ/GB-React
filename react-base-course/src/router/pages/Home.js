@@ -1,8 +1,4 @@
-// import Grid from "@mui/material/Grid";
-// import HeaderMenu from "../../components/HeaderMenu";
-// import Box from "@mui/material/Box";
-// import ChatList from "../../components/ChatList";
-// import InputMessage from "../../components/InputMessage";
+import React from 'react';
 import {Link} from "react-router-dom";
 
 const Home = () => {

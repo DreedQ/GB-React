@@ -1,46 +1,48 @@
+import React from 'react';
 import {useEffect, useRef} from "react";
 import {nanoid} from "nanoid";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Button from "@mui/material/Button";
 
-function InputMessage({chats, setChats, chatId}){
+function InputMessage(props){
+
+    // const chats = props.chats;
+    // const setChats = props.setChats;
+    // const chatId = props.chatId;
     const inputRef = useRef();
 
     const addMessage = (event)=>{
         event.preventDefault();
-        let messageBuffer = chats;
+        let messageBuffer = props.chats;
         const item={
             id: nanoid(),
             text: event.target[0].value,
             author:'User',
         };
         if(event.target[0].value){
-            messageBuffer[chatId].messages.push(item)
-            // chatBuffer = [...chats];
-            // chatBuffer[chatId].messages.push(item)
-            // console.log(messageBuffer)
-            setChats(chats)
+            messageBuffer[props.chatId].messages.push(item)
+            props.setChats(props.chats)
         }
         event.target[0].value = ''
     }
     useEffect(()=>{
-            const tempMessageList = chats;
-            let index = tempMessageList[chatId].messages.length
-            if(tempMessageList[chatId].messages[0]){
-                if(tempMessageList[chatId].messages[index-1].author !== 'Bot') {
-                    tempMessageList[chatId].messages.push({id: nanoid(), text:"Wow! You so smart.", author:"Bot",})
+            const tempMessageList = props.chats;
+            let index = tempMessageList[props.chatId].messages.length
+            if(tempMessageList[props.chatId].messages[0]){
+                if(tempMessageList[props.chatId].messages[index-1].author !== 'Bot') {
+                    tempMessageList[props.chatId].messages.push({id: nanoid(), text:"Wow! You so smart.", author:"Bot",})
                     const answerBot = setTimeout(()=> {
-                        setChats(tempMessageList)},1000)
+                        props.setChats(tempMessageList)},1000)
                     return()=>{
                         clearTimeout(answerBot)
                     }
                 }
             }
-        }, [chats])
+        }, [props.chats])
 
     useEffect(()=>{
         inputRef.current?.focus()
-    }, [chats])
+    }, [props.chats])
 
     return(
         <div>
