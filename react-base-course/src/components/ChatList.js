@@ -1,44 +1,58 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import {List,ListItem} from "@mui/material";
+import {Dialog, DialogTitle, List, ListItem, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {addChat, removeChat} from "../store/chats/chatActions"
 
 
+const ChatList = ({ chatId }) => {
+    const [visible, setVisible] = useState(false);
+    const [newChatName, setNewChatName] = useState("");
 
-const ChatList = (props) => {
+    const chats = useSelector((state) => state.chats.chatList);
+    const dispatch = useDispatch();
 
-        function addChat(event) {
-            event.preventDefault();
-            let chatsBuffer = props.chats;
-            if(event.target[0].value){
-              chatsBuffer[event.target[0].value] = {name:[event.target[0].value], messages:[{text:'Greetings, this is new chat!', author: 'Bot'}]};
-                props.setChats(chatsBuffer)
-            }
-            event.target[0].value = '';
-        }
+    const handleClose = () => setVisible(false);
+    const handleOpen = () => setVisible(true);
+    const handleChange = (e) => setNewChatName(e.target.value);
 
-        return (
-            <>
-                <List>
-                    {Object.keys(props.chats).map((id, i) => (
-                        <ListItem key={i}>
-                            <Link to={`/chats/${id}`}>
-                                <b style={{ color: id === props.chatId ? "#000000" : "grey" }}>
-                                    {props.chats[id].name}
-                                </b>
-                            </Link>
-                        </ListItem>
-                    ))}
-                </List>
-                <form onSubmit={addChat} className="chat_list_form">
-                    <input type="text" className="form_text"/>
-                    <Button className="form_btn" type="submit" variant="contained" endIcon="➢" mt={2}> Add Chat
-                    </Button>
-                </form>
-            </>
-        )
+    const onAddChat = () => {
+        dispatch(addChat(newChatName));
+        setNewChatName("");
+        handleClose();
+    };
+
+    const  onDeleteChat = (id) => {
+        dispatch(removeChat(id))
     }
-;
 
+    return (
+        <>
+                <List>
+                        {Object.keys(chats).map((id, i) => (
+                            <ListItem key={i}>
+                            <Link to={`/chats/${id}`}>
+                            <b style={{color: id === chatId ? "#000000" : "grey"}}>
+                        {chats[id].name}
+                            </b>
+                                <Button onClick={()=>onDeleteChat(chats[id].id)}>Delete</Button>
+                            </Link>
+                            </ListItem>
+                            ))}
+                </List>
+                <Button className="add-chat" onClick={handleOpen}>
+          Add New Chat
+        </Button>
+            <Dialog open={visible} onClose={handleClose}>
+                <DialogTitle>Please enter a name for new chat</DialogTitle>
+                <TextField value={newChatName} onChange={handleChange} />
+                <Button onClick={onAddChat} disabled={!newChatName}>
+                    Submit
+                </Button>
+            </Dialog>
+        </>
+    );
+};
 
 export  default ChatList

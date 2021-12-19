@@ -6,12 +6,8 @@ import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Chats from "./pages/Chats";
 import {NoChat} from "./pages/NoChat";
-import {useState} from "react";
-import {initialChats} from "./pages/Chats";
 
 export default function Routes() {
-    const [chats, setChats] = useState(initialChats);
-    // console.log(chats)
     return (
             <Grid container spacing={1} className='container'>
                 <AppBar className='header' position="static" color="primary" sx={{
@@ -46,13 +42,13 @@ export default function Routes() {
                     </Route>
 
                     <Route path="/no_chat">
-                        <NoChat chats={chats} />
+                        <NoChat  />
                     </Route>
 
                     <Route
                         path="/chats/:chatId?"
                     >
-                        <Chats chats={chats} setChats={setChats} />
+                        <Chats/>
                     </Route>
 
 

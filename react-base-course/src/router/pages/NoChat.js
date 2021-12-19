@@ -1,11 +1,11 @@
 import React from 'react';
 import ChatList from "../../components/ChatList";
 
-export const NoChat = (props) => {
+export const NoChat = () => {
     return(
         <>
-            <ChatList chats={props.chats}/>
             <span>Please select a chat</span>
+            <ChatList/>
         </>
     )
 }

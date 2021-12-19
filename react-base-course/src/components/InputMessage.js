@@ -1,55 +1,49 @@
-import React from 'react';
-import {useEffect, useRef} from "react";
-import {nanoid} from "nanoid";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import React, {useEffect, useRef} from 'react';
 import Button from "@mui/material/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {addMessage} from "../store/messages/messageActions";
+import TextField from '@mui/material/TextField';
 
-function InputMessage(props){
+function InputMessage({chatId}){
+    const profileName = useSelector(state => state.profile.name);
+    const dispatch = useDispatch();
 
-    // const chats = props.chats;
-    // const setChats = props.setChats;
-    // const chatId = props.chatId;
-    const inputRef = useRef();
-
-    const addMessage = (event)=>{
-        event.preventDefault();
-        let messageBuffer = props.chats;
-        const item={
-            id: nanoid(),
-            text: event.target[0].value,
-            author:'User',
-        };
-        if(event.target[0].value){
-            messageBuffer[props.chatId].messages.push(item)
-            props.setChats(props.chats)
-        }
-        event.target[0].value = ''
+    const onAddMessage = (e) => {
+        e.preventDefault()
+        dispatch(addMessage(chatId, e.target[0].value, profileName));
+        // console.log(e.target[0].value)
+        e.target[0].value  = ""
     }
+    let messagesList = useSelector(state=>state.messages.messageList)
+
     useEffect(()=>{
-            const tempMessageList = props.chats;
-            let index = tempMessageList[props.chatId].messages.length
-            if(tempMessageList[props.chatId].messages[0]){
-                if(tempMessageList[props.chatId].messages[index-1].author !== 'Bot') {
-                    tempMessageList[props.chatId].messages.push({id: nanoid(), text:"Wow! You so smart.", author:"Bot",})
+        if(messagesList[chatId]){
+            let index = messagesList[chatId].length
+            let messageBot = "Wow! You so smart"
+            if(messagesList[chatId][0]){
+                if(messagesList[chatId][index-1].author !== 'Bot') {
+
                     const answerBot = setTimeout(()=> {
-                        props.setChats(tempMessageList)},1000)
+                        dispatch(addMessage(chatId, messageBot, "Bot")) },2500)
                     return()=>{
                         clearTimeout(answerBot)
                     }
                 }
             }
-        }, [props.chats])
+        }
+    }, [messagesList])
+
+    const inputRef = useRef();
 
     useEffect(()=>{
         inputRef.current?.focus()
-    }, [props.chats])
+    }, [messagesList])
 
     return(
         <div>
-            <form onSubmit={addMessage} className="form">
-                <TextareaAutosize className="form_text" minRows={5} label="Text your message"  style={{ width: 300}} color="white" ref={inputRef}/>
-
-                <Button className="form_btn" type="submit" variant="contained" endIcon="➢" mt={2}> Send
+            <form  className="form" onSubmit={onAddMessage}>
+                <TextField fullWidth ref={inputRef} />
+                <Button className="form_btn"  variant="contained" type='submit'  endIcon="➢" mt={2}> Send message
                 </Button>
             </form>
         </div>
