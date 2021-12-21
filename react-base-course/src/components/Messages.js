@@ -1,12 +1,13 @@
 import  {useSelector} from "react-redux";
 import {useCallback} from "react";
 import {List, ListItem} from "@mui/material";
+import {getProfileName} from "../store/profile/selectors";
+import {getMessagesList} from "../store/messages/selectors";
 
 
 function Messages({chatId}) {
-    const profileName = useSelector(state => state.profile.name);
-    const messagesList = useSelector(state =>state.messages.messageList)
-
+    const profileName = useSelector(getProfileName);
+    const messagesList = useSelector(getMessagesList)
 
     const renderMessage = useCallback((message, i) => (
         <ListItem key={i}>
@@ -17,7 +18,6 @@ function Messages({chatId}) {
         </ListItem>
     ), [profileName]);
 
-
     if(!messagesList[chatId]) {
         return(
         <p>No messages</p>)
@@ -25,7 +25,6 @@ function Messages({chatId}) {
     return (
         <>
            <List className='messages'>
-               {/*{messagesList[chatId].map(el => <ListItem  className="messages_each" key={el.id}>{el.author}: {el.text}</ListItem> )}*/}
                {messagesList[chatId].map(el => renderMessage(el, el.id))}
            </List>
         </>

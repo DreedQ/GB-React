@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addChat, removeChat} from "../store/chats/chatActions"
 
-
 const ChatList = ({ chatId }) => {
     const [visible, setVisible] = useState(false);
     const [newChatName, setNewChatName] = useState("");

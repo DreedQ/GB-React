@@ -4,7 +4,9 @@ import { createTheme, ThemeProvider, } from '@mui/material/styles';
 import Routes from "./router/Routes";
 import {BrowserRouter} from "react-router-dom";
 import { Provider } from "react-redux";
-import {store} from "./store/index";
+import {persistor, store} from "./store/index";
+import {PersistGate} from "redux-persist/integration/react";
+import {CircularProgress} from "@mui/material";
 
 function App() {
     const theme = createTheme({
@@ -27,11 +29,13 @@ function App() {
 
     return (
         <Provider store={store}>
-        <BrowserRouter>
-                <ThemeProvider theme={theme}>
-                    <Routes/>
-                </ThemeProvider>
-        </BrowserRouter>
+            <PersistGate persistor={persistor} loading={<CircularProgress />}>
+                <BrowserRouter>
+                        <ThemeProvider theme={theme}>
+                            <Routes/>
+                        </ThemeProvider>
+                </BrowserRouter>
+            </PersistGate>
         </Provider>
 
     );
