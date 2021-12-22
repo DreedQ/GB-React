@@ -1,10 +1,16 @@
 export const ADD_MESSAGE = 'MESSAGES::ADD_MESSAGE';
+export const REMOVE_MESSAGE = 'MESSAGES::REMOVE_MESSAGE';
 
-const addMessage = (chatId, message, author) => ({
+export const addMessage = (chatId, message, author) => ({
     type: ADD_MESSAGE,
     chatId,
     payload: message,
     author: author,
+});
+
+export const removeMessage = (chatId) => ({
+    type: REMOVE_MESSAGE,
+    chatId,
 });
 
 export const addMessageWithThunk = (chatId, message, profileName) => (dispatch, getState) => {

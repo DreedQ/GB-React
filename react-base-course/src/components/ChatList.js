@@ -4,6 +4,7 @@ import {Dialog, DialogTitle, List, ListItem, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addChat, removeChat} from "../store/chats/chatActions"
+import {removeMessage} from "../store/messages/messageActions";
 
 const ChatList = ({ chatId }) => {
     const [visible, setVisible] = useState(false);
@@ -24,6 +25,7 @@ const ChatList = ({ chatId }) => {
 
     const  onDeleteChat = (id) => {
         dispatch(removeChat(id))
+        dispatch(removeMessage(id))
     }
 
     return (

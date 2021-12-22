@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Chats from "./pages/Chats";
 import {NoChat} from "./pages/NoChat";
+import {GistsList} from "../components/GistsList";
 
 export default function Routes() {
     return (
@@ -31,6 +32,10 @@ export default function Routes() {
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
+                            <li>
+                                <Link to="/gists">Gists</Link>
+                            </li>
+
                         </ul>
                     </nav>
 
@@ -54,6 +59,9 @@ export default function Routes() {
 
                     <Route exact path="/">
                         <Home />
+                    </Route>
+                    <Route path="/gists">
+                        <GistsList />
                     </Route>
 
                     <Route>

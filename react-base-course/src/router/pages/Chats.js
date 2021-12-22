@@ -7,8 +7,6 @@ import InputMessage from "../../components/InputMessage";
 
 export default function Chats() {
     const { chatId } = useParams();
-
-
     if (!chatId) {
         return <Redirect to="/no_chat" />;
     }
