@@ -5,16 +5,18 @@ import {addMessageWithThunk} from "../store/messages/messageActions";
 import TextField from '@mui/material/TextField';
 import {getProfileName} from "../store/profile/selectors";
 import {getMessagesList} from "../store/messages/selectors";
+import {getChats} from "../store/chats/selectors";
 
 function InputMessage({chatId}){
     const profileName = useSelector(getProfileName);
     const dispatch = useDispatch();
+    const chats = useSelector(getChats)
 
     let messagesList = useSelector(getMessagesList)
 
     const onAddMessage = useCallback((e) => {
         e.preventDefault()
-        dispatch(addMessageWithThunk(chatId, e.target[0].value, profileName));
+        dispatch(addMessageWithThunk(chats[chatId].id, e.target[0].value, profileName));
         e.target[0].value = ''
     }, [chatId, dispatch, profileName]);
 

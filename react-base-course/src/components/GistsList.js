@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, List, ListItem} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllGists} from "../store/gists/gistsActions";
 import {selectGists, selectGistsError, selectGistsLoading} from "../store/gists/selectors";
@@ -21,10 +21,10 @@ export const GistsList = () => {
     }, []);
 
     const renderGist = useCallback(
-        (gist) => <li key={gist.id}>{gist.description}</li>,
+        (gist) => <ListItem key={gist.id}>{gist.description}</ListItem>,
         []
     );
-
+    console.log(gists);
     if (loading) {
         return <CircularProgress />;
     }
@@ -38,5 +38,5 @@ export const GistsList = () => {
         );
     }
 
-    return <ul>{gists.map(renderGist)}</ul>;
+    return <List>{gists.map(el=>renderGist(el))}</List>;
 };

@@ -19,6 +19,7 @@ const chatsReducer = (state = initialState, action) => {
                 ],
             };
         case REMOVE_CHAT:
+            // console.log(action.payload)
             return {
                 ...state,
                 chatList: [

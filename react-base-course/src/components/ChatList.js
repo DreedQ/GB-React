@@ -5,12 +5,12 @@ import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addChat, removeChat} from "../store/chats/chatActions"
 import {removeMessage} from "../store/messages/messageActions";
+import {getChats} from "../store/chats/selectors";
 
 const ChatList = ({ chatId }) => {
     const [visible, setVisible] = useState(false);
     const [newChatName, setNewChatName] = useState("");
-
-    const chats = useSelector((state) => state.chats.chatList);
+    const chats = useSelector(getChats);
     const dispatch = useDispatch();
 
     const handleClose = () => setVisible(false);
@@ -25,7 +25,7 @@ const ChatList = ({ chatId }) => {
 
     const  onDeleteChat = (id) => {
         dispatch(removeChat(id))
-        dispatch(removeMessage(id))
+        dispatch(removeMessage(chats[chatId].id))
     }
 
     return (
@@ -37,6 +37,7 @@ const ChatList = ({ chatId }) => {
                             <b style={{color: id === chatId ? "#000000" : "grey"}}>
                         {chats[id].name}
                             </b>
+                                {console.log(chats[id])}
                                 <Button onClick={()=>onDeleteChat(chats[id].id)}>Delete</Button>
                             </Link>
                             </ListItem>

@@ -3,11 +3,15 @@ import ChatList from "../../components/ChatList";
 import {Redirect, useParams,} from "react-router-dom";
 import Messages from "../../components/Messages";
 import InputMessage from "../../components/InputMessage";
+import {useSelector} from "react-redux";
+import {getChats} from "../../store/chats/selectors";
 
 
 export default function Chats() {
+    const chats = useSelector(getChats)
+
     const { chatId } = useParams();
-    if (!chatId) {
+    if (!chats[chatId]) {
         return <Redirect to="/no_chat" />;
     }
 
