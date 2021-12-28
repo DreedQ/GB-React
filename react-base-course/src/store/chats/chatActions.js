@@ -1,16 +1,42 @@
-export const ADD_CHAT = "CHATS::ADD_CHAT";
-export const REMOVE_CHAT = "CHATS::REMOVE_CHAT";
+import {ref, set, onChildAdded, onChildChanged, onValue} from "firebase/database";
+import {dataBase} from "../../services/firebase";
 
+export const CHANGE_CHAT = "CHATS::CHANGE_CHAT";
 
-export const addChat = (name) => ({
-    type: ADD_CHAT,
-    payload: name,
-});
+export const addChatWithFirebase = (chat)=> async() =>{
+    set(ref(dataBase, "chats/"+ chat.name), {...chat})
+    // console.log(chat);
+}
 
-export const removeChat = (payload) => ({
-    type: REMOVE_CHAT,
-    payload: payload,
-});
+export const initChatTracking = () => (dispatch) => {
+    onValue(ref(dataBase, 'chats'), (snapshot => {
+        const payload = [];
+        snapshot.forEach(chat=>{
+            payload.push(chat.val())
+        })
+        dispatch({
+            type:CHANGE_CHAT,
+            payload,
+        })
+    }) )
+    onChildAdded(ref(dataBase, 'chats'), (snapshot => {
+        const payload = [];
+        payload.push(snapshot.val())
+        dispatch({
+            type: CHANGE_CHAT,
+            payload,
+        })
+    }));
+
+    onChildChanged(ref(dataBase, 'chats'), (snapshot => {
+        const payload = [];
+        payload.push(snapshot.val())
+        dispatch({
+            type: CHANGE_CHAT,
+            payload,
+        })
+    }));
+}
 
 
 

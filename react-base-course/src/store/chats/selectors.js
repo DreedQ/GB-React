@@ -1,3 +1,3 @@
 export const getChats = (state) => {
-    return state.chats.chatList
+    return state.chats.chats
 }

@@ -10,6 +10,7 @@ const Profile = ()=>{
     const dispatch = useDispatch();
 
     const [value, setValue] = useState('');
+
     const setShowName = useCallback(() => {
         dispatch(toggleShowName);
     }, [dispatch]);

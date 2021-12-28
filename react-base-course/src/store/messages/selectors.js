@@ -1,3 +1,1 @@
-export const getMessagesList = (state) =>{
-    return state.messages.messageList
-}
+export const getMessagesList = (state) => state.messages.messages;

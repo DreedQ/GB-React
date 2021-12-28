@@ -5,7 +5,7 @@ import messagesReducer from "./messages/messagesReducer";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import gistsReducer from "./gists/gistsRedicer"; // localStorage
+import gistsReducer from "./gists/gistsRedicer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     chats: chatsReducer,
     profile: profileReducer,
     messages: messagesReducer,
-    gists: gistsReducer,
+    gists: gistsReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

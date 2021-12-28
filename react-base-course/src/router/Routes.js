@@ -1,14 +1,34 @@
-import React from 'react';
-import { Route, Switch, Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Switch, Link} from "react-router-dom";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Chats from "./pages/Chats";
-import {NoChat} from "./pages/NoChat";
+import {Signup} from "../components/Signup";
 import {GistsList} from "../components/GistsList";
+import {Login} from "../components/Login";
+import PublicRoute from "../hooks/PublicRoute";
+import PrivateRoute from "../hooks/PrivateRoute";
+import {Myapp} from "../services/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {NoChat} from "./pages/NoChat";
 
 export default function Routes() {
+    const [authed, setAuthed] = useState(false);
+
+    useEffect(() => {
+        // firebase.auth().onAuthStateChanged((user) => {
+        const auth = getAuth(Myapp);
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                setAuthed(true);
+            } else {
+                setAuthed(false);
+            }
+        })
+    }, []);
+
     return (
             <Grid container spacing={1} className='container'>
                 <AppBar className='header' position="static" color="primary" sx={{
@@ -35,6 +55,12 @@ export default function Routes() {
                             <li>
                                 <Link to="/gists">Gists</Link>
                             </li>
+                            <li>
+                                <Link to="/signup">Registration</Link>
+                            </li>
+                            <li>
+                                <Link to="/login">Login</Link>
+                            </li>
 
                         </ul>
                     </nav>
@@ -42,31 +68,27 @@ export default function Routes() {
                 </AppBar>
 
                 <Switch>
-                    <Route path="/profile">
-                        <Profile />
-                    </Route>
-
-                    <Route path="/no_chat">
-                        <NoChat  />
-                    </Route>
-
-                    <Route
-                        path="/chats/:chatId?"
-                    >
-                        <Chats/>
-                    </Route>
-
-
-                    <Route exact path="/">
+                    <PublicRoute authenticated={authed} exact path="/">
                         <Home />
-                    </Route>
-                    <Route path="/gists">
+                    </PublicRoute>
+                    <PublicRoute authenticated={authed} path="/login">
+                        <Login />
+                    </PublicRoute>
+                    <PublicRoute authenticated={authed} path="/signup">
+                        <Signup />
+                    </PublicRoute>
+                    <PrivateRoute authenticated={authed} path="/chats/:chatId?">
+                        <Chats />
+                    </PrivateRoute>
+                    <PrivateRoute authenticated={authed} path="/profile">
+                        <Profile />
+                    </PrivateRoute>
+                    <PrivateRoute authenticated={authed} path="/no_chat">
+                        <NoChat />
+                    </PrivateRoute>
+                    <PublicRoute authenticated={authed} path="/gists">
                         <GistsList />
-                    </Route>
-
-                    <Route>
-                        <h3>Page not found</h3>
-                    </Route>
+                    </PublicRoute>
                 </Switch>
             </Grid>
     );

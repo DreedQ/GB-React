@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Dialog, DialogTitle, List, ListItem, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addChat, removeChat} from "../store/chats/chatActions"
-import {removeMessage} from "../store/messages/messageActions";
+import {addChatWithFirebase, initChatTracking} from "../store/chats/chatActions"
 import {getChats} from "../store/chats/selectors";
 
 const ChatList = ({ chatId }) => {
@@ -18,14 +17,18 @@ const ChatList = ({ chatId }) => {
     const handleChange = (e) => setNewChatName(e.target.value);
 
     const onAddChat = () => {
-        dispatch(addChat(newChatName));
+        dispatch(addChatWithFirebase({name:newChatName, id: `${Date.now()}`}));
         setNewChatName("");
         handleClose();
     };
 
+    useEffect(()=>{
+        dispatch(initChatTracking())
+    },[])
+
     const  onDeleteChat = (id) => {
-        dispatch(removeChat(id))
-        dispatch(removeMessage(chats[chatId].id))
+    //     dispatch(removeChat(id))
+        // dispatch(removeMessage(chats[chatId].id))
     }
 
     return (
@@ -37,7 +40,6 @@ const ChatList = ({ chatId }) => {
                             <b style={{color: id === chatId ? "#000000" : "grey"}}>
                         {chats[id].name}
                             </b>
-                                {console.log(chats[id])}
                                 <Button onClick={()=>onDeleteChat(chats[id].id)}>Delete</Button>
                             </Link>
                             </ListItem>

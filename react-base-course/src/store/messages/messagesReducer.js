@@ -1,35 +1,19 @@
-import {ADD_MESSAGE, REMOVE_MESSAGE} from "./messageActions";
+import {CHANGE_MESSAGES} from "./messageActions";
 
 const initialState = {
-    messageList: {},
+    messages: {},
 };
 
 const messagesReducer = (state = initialState, action) => {
-    // console.log(action)
-    switch (action?.type) {
-        case ADD_MESSAGE: {
-            const currentList = state.messageList[action.chatId] || [];
+    switch (action.type) {
+        case CHANGE_MESSAGES: {
             return {
                 ...state,
-                messageList: {
-                    ...state.messageList,
-                    [action.chatId]: [
-                        ...currentList,
-                        {
-                            text: action.payload,
-                            id: `${action.chatId}${currentList.length}`,
-                            author: action.author
-                        },
-                    ],
+                messages: {
+                    ...state.messages,
+                    [action.payload.chatId]: action.payload.messages,
                 },
             };
-        }
-        case REMOVE_MESSAGE: {
-            const newMessagesList = {...state.messageList};
-            delete newMessagesList[action.chatId]
-            return {
-                messageList: newMessagesList
-            }
         }
         default:
             return state;
